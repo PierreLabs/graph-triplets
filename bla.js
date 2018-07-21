@@ -100,6 +100,10 @@ $(function() {
         label.attr("font-family", "Arial, Helvetica, sans-serif")
             .style("font", "normal 9px Arial")
             .style("fill", function(d) {
+                d3.selectAll("input").select(function() {
+                    if (this.value == d.value)
+                        this.style.color = color(d.value);
+                });
                 return color(d.value); //d.source != 0 ? "#f48142" : "#3f4a67"
             })
             .attr("dy", "-3")
@@ -113,7 +117,7 @@ $(function() {
                     return "#path" + d.target + "_" + d.source;
                 })
             .text(function(d) {
-                return d.value;
+                return "->" + d.value + "->";
             });
 
         function moveto(d) {
@@ -124,6 +128,8 @@ $(function() {
             return "L" + d.source.x + "," + d.source.y;
         };
 
+
+
         var node = g
             .attr("class", "nodes")
             .selectAll("circle")
@@ -131,6 +137,10 @@ $(function() {
             .enter().append("circle")
             .attr("r", 10)
             .attr("fill", function(d) {
+                d3.selectAll("input").select(function() {
+                    if (this.value == d.id)
+                        this.style.backgroundColor = color(d.id);
+                });
                 return color(d.id);
             })
             .call(d3.drag()
