@@ -1,10 +1,11 @@
+/*jshint esversion: 6 */
 $(function() {
     var iSPO = -1;
 
     $("#nouvTriple").click(function() {
         iSPO++;
         $(this).before("<br><input type='text' id='Suj" + iSPO + "'><input type='text' id='Pred" + iSPO + "'><input type='text' id='Obj" + iSPO + "'><br><br>");
-        $("#prse").css("display", "block")
+        $("#prse").css("display", "block");
     });
 
     $("#prse").on("click", function() {
@@ -21,7 +22,7 @@ $(function() {
                 id: e.value,
                 group: "sujets"
             });
-        })
+        });
 
         var $objs = $("input[id^='Obj']");
         $.each($objs, function(i, e) {
@@ -29,7 +30,7 @@ $(function() {
                 id: e.value,
                 group: "objets"
             });
-        })
+        });
 
         var $preds = $("input[id^='Pred']");
         $.each($preds, function(i, e) {
@@ -38,7 +39,7 @@ $(function() {
                 source: e.nextSibling.value,
                 value: e.value
             });
-        })
+        });
 
         var newnodes = supprDoublons(nodes, "id"); //Tableau des noeuds uniques
         dataobj = {
@@ -82,7 +83,7 @@ $(function() {
             .data(dataobj.links)
             .enter().append("line")
             .attr("stroke-width", 1)
-            .attr("stroke", function(d) { return color(d.value) });
+            .attr("stroke", function(d) { return color(d.value); });
 
         var pathT = g.selectAll(".links")
             .data(dataobj.links)
@@ -117,16 +118,16 @@ $(function() {
                     return "#path" + d.target + "_" + d.source;
                 })
             .text(function(d) {
-                return "->" + d.value + "->";
+                return d.value;
             });
 
         function moveto(d) {
             return "M" + d.target.x + "," + d.target.y;
-        };
+        }
 
         function lineto(d) {
             return "L" + d.source.x + "," + d.source.y;
-        };
+        }
 
 
 
@@ -206,11 +207,11 @@ $(function() {
             d.fx = null;
             d.fy = null;
         }
-    })
+    });
 
     function supprDoublons(myArr, prop) {
         return myArr.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
         });
     }
-})
+});
