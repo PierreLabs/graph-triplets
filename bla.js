@@ -57,9 +57,6 @@ $(function() {
 
         var g = svg.append("g");
 
-        var scalescale = d3.scaleLinear().domain([2, 200]).range([1.37, 0.6]);
-        var lascale = scalescale(dataobj.nodes.length);
-
         var zoom = d3.zoom()
             .scaleExtent([0.8 / 2, 4])
             .on("zoom", zoomed);
