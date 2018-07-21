@@ -1,9 +1,9 @@
 $(function() {
-    var varindspo = -1;
+    var iSPO = -1;
 
     $("#nouvTriple").click(function() {
-        varindspo++;
-        $("#prse").before("<br><input type='tex' id='Suj" + varindspo + "'><input type='text' id='Pred" + varindspo + "'><input type='text' id='Obj" + varindspo + "'><br><br>").css("display", "block");
+        iSPO++;
+        $("#prse").before("<br><input type='tex' id='Suj" + iSPO + "'><input type='text' id='Pred" + iSPO + "'><input type='text' id='Obj" + iSPO + "'><br><br>").css("display", "block");
     });
 
     $("#prse").on("click", function() {
@@ -39,7 +39,7 @@ $(function() {
             });
         })
 
-        var newnodes = removeDuplicates(nodes, "id");
+        var newnodes = supprDoublons(nodes, "id");
         dataobj = {
             nodes: newnodes,
             links: links
@@ -200,7 +200,7 @@ $(function() {
         }
     })
 
-    function removeDuplicates(myArr, prop) {
+    function supprDoublons(myArr, prop) {
 
         return myArr.filter((obj, pos, arr) => {
 
