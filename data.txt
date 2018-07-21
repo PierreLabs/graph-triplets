@@ -1,0 +1,6 @@
+<oeuvre4> <expression> <expression1> .
+<toto> <créateur> <oeuvre1> .
+<toto> <contributeur> <expression1> .
+<toto> <créateur> <oeuvre3> .
+<titi> <connait> <toto> .
+<titi> <créateur> <oeuvre4> .
