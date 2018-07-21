@@ -8,9 +8,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" media="screen" href="temp.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="/css/bootstrap.min.css" />
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="/js/jquery-3.3.1.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="/js/d3.min.js"></script>
 </head>
 
 <body>
@@ -20,7 +20,9 @@
                 <div class="col-lg-6">
                     <h1 class="display-4">Construction d'un Graphe à partir de triplets</h1>
                 </div>
-                <div class="col-lg-6"><img src="/images/logo_TB_texte.png" alt="logo transition"></div>
+                <div class="col-lg-6">
+                    <img src="/images/logo_TB_texte.png" alt="logo transition">
+                </div>
             </div>
         </div>
         <div class="row">
@@ -29,7 +31,8 @@
             </div>
             <div class="col">
                 <div id='trples'>
-                    <input type='button' class="btn btn-sm btn-outline-secondary" id='nouvTriple' value='Créer [Sujet>Prédicat>Objet]'><br>
+                    <input type='button' class="btn btn-sm btn-outline-secondary" id='nouvTriple' value='Créer [Sujet>Prédicat>Objet]'>
+                    <br>
                     <input type='button' class="btn btn-outline-primary" id='prse' value='Générer le graphe' style="display:none;">
                 </div>
             </div>
