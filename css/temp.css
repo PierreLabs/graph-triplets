@@ -11,3 +11,7 @@
 #trples {
     width: 250px;
 }
+
+svg {
+    border: 1px solid gray;
+}
