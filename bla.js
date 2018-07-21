@@ -39,7 +39,7 @@ $(function() {
             });
         })
 
-        var newnodes = supprDoublons(nodes, "id");
+        var newnodes = supprDoublons(nodes, "id"); //Tableau des noeuds uniques
         dataobj = {
             nodes: newnodes,
             links: links
@@ -120,7 +120,7 @@ $(function() {
         };
 
         function lineto(d) {
-            return " L" + d.source.x + "," + d.source.y;
+            return "L" + d.source.x + "," + d.source.y;
         };
 
         var node = g
