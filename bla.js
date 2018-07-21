@@ -104,7 +104,7 @@ $(function() {
                     if (this.value == d.value)
                         this.style.color = color(d.value);
                 });
-                return color(d.value); //d.source != 0 ? "#f48142" : "#3f4a67"
+                return color(d.value);
             })
             .attr("dy", "-3")
             .attr("dx", "13")
