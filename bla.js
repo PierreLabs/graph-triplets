@@ -3,7 +3,8 @@ $(function() {
 
     $("#nouvTriple").click(function() {
         iSPO++;
-        $("#prse").before("<br><input type='tex' id='Suj" + iSPO + "'><input type='text' id='Pred" + iSPO + "'><input type='text' id='Obj" + iSPO + "'><br><br>").css("display", "block");
+        $(this).before("<br><input type='text' id='Suj" + iSPO + "'><input type='text' id='Pred" + iSPO + "'><input type='text' id='Obj" + iSPO + "'><br><br>");
+        $("#prse").css("display", "block")
     });
 
     $("#prse").on("click", function() {
