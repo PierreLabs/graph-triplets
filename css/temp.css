@@ -9,7 +9,13 @@
 }
 
 #trples {
-    width: 280px;
+    width: 450px;
+}
+
+#trples input[type='text'] {
+    width: 150px;
+    padding: 2px;
+    text-align: center;
 }
 
 svg {
