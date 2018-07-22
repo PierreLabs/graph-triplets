@@ -92,7 +92,7 @@ $(function() {
             .attr("class", "pathT")
             .attr("id",
                 function(d) {
-                    return "path" + d.target + "_" + d.source;
+                    return "path" + d.source + "_" + d.target;
                 });
 
         var label = g.selectAll("text")
@@ -118,7 +118,7 @@ $(function() {
         label.append("textPath")
             .attr("xlink:href",
                 function(d) {
-                    return "#path" + d.target + "_" + d.source;
+                    return "#path" + d.source + "_" + d.target;
                 })
             .text(function(d) {
                 return d.value;
