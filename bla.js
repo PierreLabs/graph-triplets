@@ -12,6 +12,8 @@ $(function() {
 
         $(this).val("Mettre le graphe à jour");
 
+        //depuis pc2
+
         var nodes = [];
         var links = [];
         var dataobj = {};
