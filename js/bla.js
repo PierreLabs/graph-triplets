@@ -4,7 +4,7 @@ $(function() {
 
     $("#nouvTriple").click(function() {
         iSPO++;
-        $(this).before("<input type='text' id='Suj" + iSPO + "'><input type='text' id='Pred" + iSPO + "'><input type='text' id='Obj" + iSPO + "'><br><br>");
+        $(this).before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
         $("#prse").css("display", "block");
     });
 
