@@ -16,6 +16,7 @@ $(function() {
         var links = [];
         var dataobj = {};
 
+        //Sujets = noeuds
         var $sujs = $("input[id^='Suj']");
         $.each($sujs, function(i, e) {
             nodes.push({
@@ -24,6 +25,7 @@ $(function() {
             });
         });
 
+        //Objets = noeuds
         var $objs = $("input[id^='Obj']");
         $.each($objs, function(i, e) {
             nodes.push({
@@ -32,9 +34,11 @@ $(function() {
             });
         });
 
+        //Prédicats = arcs
         var $preds = $("input[id^='Pred']");
         $.each($preds, function(i, e) {
             links.push({
+                //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des liens orientés à partir du label.
                 target: e.previousSibling.value,
                 source: e.nextSibling.value,
                 value: e.value
@@ -48,8 +52,6 @@ $(function() {
         };
 
         d3.selectAll("svg > *").remove();
-
-        var attractForce = d3.forceManyBody().strength(-500).distanceMin(150).distanceMax(200);
 
         var svg = d3.select("svg"),
             width = +svg.attr("width"),
@@ -72,9 +74,8 @@ $(function() {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
-            }).distance(50))
+            }).distance(function(d) { return d.value.length * 10; }))
             .force("charge", d3.forceManyBody())
-            .force("attractForce", attractForce)
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         var link = g
