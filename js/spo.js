@@ -74,7 +74,7 @@ $(function() {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
-            }).distance(function(d) { return d.value.length * 10; }))
+            }).distance(function(d) { return d.value.length > 4 ? d.value.length * 10 : 40; }))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
