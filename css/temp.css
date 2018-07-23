@@ -18,6 +18,10 @@
     text-align: center;
 }
 
+footer a {
+    float: right;
+}
+
 .footer-copyright {
     color: white;
     margin-top: 20px;
