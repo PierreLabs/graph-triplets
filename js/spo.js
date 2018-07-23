@@ -14,9 +14,9 @@ $(function() {
 
         $(this).val("Mettre le graphe à jour");
 
-        var nodes = [];
-        var links = [];
-        var dataobj = {};
+        var nodes = [],
+            links = [],
+            dataobj = {};
 
         //Sujets = noeuds
         var $sujs = $("input[id^='Suj']");
