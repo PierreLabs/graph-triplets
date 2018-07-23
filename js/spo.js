@@ -20,7 +20,7 @@ $(function() {
         var $sujs = $("input[id^='Suj']");
         $.each($sujs, function(i, e) {
             nodes.push({
-                id: e.value,
+                id: e.value, //Sujet
                 group: "sujets"
             });
         });
@@ -29,7 +29,7 @@ $(function() {
         var $objs = $("input[id^='Obj']");
         $.each($objs, function(i, e) {
             nodes.push({
-                id: e.value,
+                id: e.value, //objet
                 group: "objets"
             });
         });
@@ -39,9 +39,9 @@ $(function() {
         $.each($preds, function(i, e) {
             links.push({
                 //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des liens orientés à partir du label.
-                target: e.previousSibling.value,
-                source: e.nextSibling.value,
-                value: e.value
+                target: e.previousSibling.value, //Sujet
+                source: e.nextSibling.value, //Objet
+                value: e.value //Prédicat
             });
         });
 
