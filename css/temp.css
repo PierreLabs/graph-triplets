@@ -18,6 +18,11 @@
     text-align: center;
 }
 
+.footer-copyright {
+    color: white;
+    margin-top: 20px;
+}
+
 ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: #ccc;
