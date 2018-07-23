@@ -105,7 +105,7 @@ $(function() {
                 d3.selectAll("input").select(function() {
                     if (this.value == d.value) {
                         this.style.color = color(d.value);
-                        this.style.border = "2px solid" + color(d.value);
+                        //this.style.border = "2px solid" + color(d.value);
                     }
                 });
                 return color(d.value);
