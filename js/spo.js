@@ -2,6 +2,8 @@
 $(function() {
     var iSPO = -1;
 
+    $("#prse").css('display', 'none');
+
     $("#nouvTriple").click(function() {
         iSPO++;
         $(this).before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
