@@ -1,3 +1,8 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
 .links line {
     stroke: #999;
     stroke-opacity: 0.6;
@@ -18,13 +23,24 @@
     text-align: center;
 }
 
+#nouvTriple {
+    margin-bottom: 15px;
+}
+
+#prse {
+    margin-bottom: 80px;
+}
+
 footer a {
     float: right;
 }
 
-.footer-copyright {
-    color: white;
-    margin-top: 20px;
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 98%;
+    height: 60px;
+    color: #FFFFFF;
 }
 
 ::placeholder {

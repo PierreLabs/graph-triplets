@@ -21,7 +21,7 @@ $(function() {
         var $sujs = $("input[id^='Suj']");
         $.each($sujs, function(i, e) {
             nodes.push({
-                id: e.value,
+                id: e.value, //Sujet
                 group: "sujets"
             });
         });
@@ -30,7 +30,7 @@ $(function() {
         var $objs = $("input[id^='Obj']");
         $.each($objs, function(i, e) {
             nodes.push({
-                id: e.value,
+                id: e.value, //objet
                 group: "objets"
             });
         });
@@ -78,7 +78,7 @@ $(function() {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
-            }).distance(function(d) { return d.value.length * 10; }))
+            }).distance(function(d) { return d.value.length > 4 ? d.value.length * 10 : 40; }))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
