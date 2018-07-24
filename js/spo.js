@@ -149,7 +149,7 @@ $(function() {
             .attr("fill", function(d) {
                 d3.selectAll("input").select(function() {
                     if (this.value == d.id) { //couleurs inputs (border pour les noeuds)
-                        this.style.border = "2px solid" + color(d.id);
+                        this.style.border = "3px solid" + color(d.id);
                     }
                 });
                 return color(d.id);
