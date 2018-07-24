@@ -2,19 +2,20 @@
 $(function() {
     var iSPO = -1;
 
+    //Ajout des inputs SPO
     $("#nouvTriple").click(function() {
         iSPO++;
         $(this).before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
         $("#prse").css("display", "block");
     });
 
+    //Parsing
     $("#prse").on("click", function() {
-
         $(this).val("Mettre le graphe à jour");
 
-        var nodes = [];
-        var links = [];
-        var dataobj = {};
+        var nodes = []; //Les noeuds
+        var links = []; //Les arcs
+        var dataobj = {}; //Objet des tableaux noeuds/liens
 
         //Sujets = noeuds
         var $sujs = $("input[id^='Suj']");
@@ -38,7 +39,7 @@ $(function() {
         var $preds = $("input[id^='Pred']");
         $.each($preds, function(i, e) {
             links.push({
-                //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des liens orientés à partir du label.
+                //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des labels orientés sur le lien.
                 target: e.previousSibling.value,
                 source: e.nextSibling.value,
                 value: e.value
@@ -51,6 +52,7 @@ $(function() {
             links: links
         };
 
+        //Init D3
         d3.selectAll("svg > *").remove();
 
         var svg = d3.select("svg"),
@@ -61,6 +63,7 @@ $(function() {
 
         var g = svg.append("g");
 
+        //Zoom
         var zoom = d3.zoom()
             .scaleExtent([0.8 / 2, 4])
             .on("zoom", zoomed);
@@ -71,6 +74,7 @@ $(function() {
             g.attr("transform", d3.event.transform);
         }
 
+        //Mise en place des forces
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
@@ -78,6 +82,7 @@ $(function() {
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
+        //liens
         var link = g
             .attr("class", "links")
             .selectAll("line")
@@ -86,6 +91,7 @@ $(function() {
             .attr("stroke-width", 1)
             .attr("stroke", function(d) { return color(d.value); });
 
+        //Chemins labels
         var pathT = g.selectAll(".links")
             .data(dataobj.links)
             .enter().append("path")
@@ -95,6 +101,7 @@ $(function() {
                     return "path" + d.source + "_" + d.target;
                 });
 
+        //Label
         var label = g.selectAll("text")
             .data(dataobj.links)
             .enter().append("text");
@@ -132,8 +139,7 @@ $(function() {
             return "L" + d.source.x + "," + d.source.y;
         }
 
-
-
+        //Noeuds
         var node = g
             .attr("class", "nodes")
             .selectAll("circle")
@@ -142,7 +148,7 @@ $(function() {
             .attr("r", 10)
             .attr("fill", function(d) {
                 d3.selectAll("input").select(function() {
-                    if (this.value == d.id) {
+                    if (this.value == d.id) { //couleurs inputs (border pour les noeuds)
                         this.style.border = "2px solid" + color(d.id);
                     }
                 });
@@ -153,6 +159,7 @@ $(function() {
                 .on("drag", dragged)
                 .on("end", dragended));
 
+        //Title pour avoir l'id du noeud au survol
         node.append("title")
             .text(function(d) {
                 return d.id;
@@ -213,6 +220,7 @@ $(function() {
         }
     });
 
+    //Fonction pour supprimer les doublons dans le tableau des noeuds
     function supprDoublons(myArr, prop) {
         return myArr.filter((obj, pos, arr) => {
             return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
