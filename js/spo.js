@@ -55,6 +55,7 @@ $(function() {
         //Json résultant et affichage sur la page (popup)
         var jsonTemp = JSON.stringify(dataobj, undefined, 1);
         $("#jsonModalBody").html("<pre>" + jsonTemp + "</pre>");
+        $("#jsonModalTitle").html(dataobj.nodes.length + " noeuds et " + dataobj.links.length + " relations");
         $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
 
         //Init D3
@@ -83,7 +84,7 @@ $(function() {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
-            }).distance(function(d) { return d.value.length > 4 ? d.value.length * 10 : 40; }))
+            }).distance(function(d) { return d.value.length + 2 > 5 ? d.value.length * 10 : 50; }))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
