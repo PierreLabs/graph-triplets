@@ -133,7 +133,7 @@ $(function() {
                     return "#path" + d.source + "_" + d.target;
                 })
             .text(function(d) {
-                return d.value;
+                return d.value + " >";
             });
 
         function moveto(d) {
