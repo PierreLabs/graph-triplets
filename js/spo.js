@@ -52,6 +52,11 @@ $(function() {
             links: links
         };
 
+        //Json résultant et affichage sur la page (popup)
+        var jsonTemp = JSON.stringify(dataobj, undefined, 1);
+        $("#jsonModalBody").html("<pre>" + jsonTemp + "</pre>");
+        $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
+
         //Init D3
         d3.selectAll("svg > *").remove();
 
@@ -111,8 +116,8 @@ $(function() {
             .style("fill", function(d) {
                 d3.selectAll("input").select(function() {
                     if (this.value == d.value) {
+                        //couleurs inputs (texte pour les arcs)
                         this.style.color = color(d.value);
-                        //this.style.border = "2px solid" + color(d.value);
                     }
                 });
                 return color(d.value);
@@ -148,7 +153,8 @@ $(function() {
             .attr("r", 10)
             .attr("fill", function(d) {
                 d3.selectAll("input").select(function() {
-                    if (this.value == d.id) { //couleurs inputs (border pour les noeuds)
+                    if (this.value == d.id) {
+                        //couleurs inputs (border pour les noeuds)
                         this.style.border = "3px solid" + color(d.id);
                     }
                 });
