@@ -6,51 +6,69 @@ $(function() {
     $("#nouvTriple").click(function() {
         iSPO++;
         $(this).before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
-        $("#prse").css("display", "block");
+        $("#prse").css("display", "block").val("Générer le graphe");
     });
 
     //Parsing
     $("#prse").on("click", function() {
+        if ($("input[type='text']").is(function() { return $(this).val() == ""; })) {
+            return false;
+        }
         $(this).val("Mettre le graphe à jour");
 
         var nodes = []; //Les noeuds
         var links = []; //Les arcs
         var dataobj = {}; //Objet des tableaux noeuds/liens
 
-        //Sujets = noeuds
-        var $sujs = $("input[id^='Suj']");
-        $.each($sujs, function(i, e) {
-            nodes.push({
-                id: e.value, //Sujet
-                group: "sujets"
-            });
-        });
+        if (!$("#Suj0").length) {
+            var ble = $.get("exemple.json", function(data) {
+                iSPO = 0;
+                $.each(data.links, function(i, e) {
+                    $("#nouvTriple").before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
+                    $("#Suj" + iSPO).val(e.target);
+                    $("#Pred" + iSPO).val(e.value);
+                    $("#Obj" + iSPO).val(e.source);
+                    iSPO++;
+                });
+                dataobj = data;
 
-        //Objets = noeuds
-        var $objs = $("input[id^='Obj']");
-        $.each($objs, function(i, e) {
-            nodes.push({
-                id: e.value, //objet
-                group: "objets"
             });
-        });
-
-        //Prédicats = arcs
-        var $preds = $("input[id^='Pred']");
-        $.each($preds, function(i, e) {
-            links.push({
-                //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des labels orientés sur le lien.
-                target: e.previousSibling.value,
-                source: e.nextSibling.value,
-                value: e.value
+        } else {
+            //Sujets = noeuds
+            var $sujs = $("input[id^='Suj']");
+            $.each($sujs, function(i, e) {
+                nodes.push({
+                    id: e.value, //Sujet
+                    group: "sujets"
+                });
             });
-        });
 
-        var newnodes = supprDoublons(nodes, "id"); //Tableau des noeuds uniques
-        dataobj = {
-            nodes: newnodes,
-            links: links
-        };
+            //Objets = noeuds
+            var $objs = $("input[id^='Obj']");
+            $.each($objs, function(i, e) {
+                nodes.push({
+                    id: e.value, //objet
+                    group: "objets"
+                });
+            });
+
+            //Prédicats = arcs
+            var $preds = $("input[id^='Pred']");
+            $.each($preds, function(i, e) {
+                links.push({
+                    //Source et Target inversées... Je ne suis pas parvenu à faire un rotate(180) sur le label. Pas beau sur la logique globale mais c'est fonctionnel pour avoir des labels orientés sur le lien.
+                    target: e.previousSibling.value,
+                    source: e.nextSibling.value,
+                    value: e.value
+                });
+            });
+
+            var newnodes = supprDoublons(nodes, "id"); //Tableau des noeuds uniques
+            dataobj = {
+                nodes: newnodes,
+                links: links
+            };
+        }
 
         //Json résultant et affichage sur la page (popup)
         var jsonTemp = JSON.stringify(dataobj, undefined, 1);
@@ -159,7 +177,7 @@ $(function() {
                 d3.selectAll("input").select(function() {
                     if (this.value == d.id) {
                         //couleurs inputs (border pour les noeuds)
-                        this.style.border = "3px solid" + color(d.id);
+                        this.style.border = "5px solid" + color(d.id);
                     }
                 });
                 return color(d.id);
