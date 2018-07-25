@@ -33,7 +33,6 @@ $(function() {
                     iSPO++;
                 });
                 dataobj = data;
-
             });
         } else {
             //Sujets = noeuds
@@ -131,7 +130,7 @@ $(function() {
                     return "path" + d.source + "_" + d.target;
                 });
 
-        //Label
+        //Labels
         var label = g.selectAll("text")
             .data(dataobj.links)
             .enter().append("text");
@@ -177,12 +176,13 @@ $(function() {
             .enter().append("circle")
             .attr("r", 10)
             .attr("fill", function(d) {
-                d3.selectAll("input").select(function() {
-                    if (this.value == d.id) {
-                        //couleurs inputs (border pour les noeuds)
-                        this.style.border = "5px solid" + color(d.id);
-                    }
-                });
+                d3.selectAll("input")
+                    .select(function() {
+                        if (this.value == d.id) {
+                            //couleurs inputs (border pour les noeuds)
+                            this.style.border = "5px solid" + color(d.id);
+                        }
+                    });
                 return color(d.id);
             })
             .call(d3.drag()
@@ -203,6 +203,25 @@ $(function() {
         simulation.force("link")
             .links(dataobj.links);
 
+        //Changement du rayon du noeud au survol
+        $("input[type='text']").hover(function() { //mouseEnter
+            var laval = this.value;
+            //le noeud possédant la valeur de l'input
+            g.selectAll("circle")
+                .filter(function(d) {
+                    return d.id === laval;
+                }).transition().attr("r", 20);
+
+        }, function() { //mouseOut
+            var laval = this.value;
+            //le noeud possédant la valeur de l'input
+            g.selectAll("circle")
+                .filter(function(d) {
+                    return d.id === laval;
+                }).transition().attr("r", 10);
+        });
+
+        //Fonction itération d3
         function ticked() {
             link
                 .attr("x1", function(d) {
