@@ -126,7 +126,7 @@ $(function() {
                 });
                 return color(d.value);
             })
-            .attr("dy", "-3")
+            .attr("dy", "-5")
             .attr("dx", "13")
             .style('text-anchor', 'start')
             .attr("fill-opacity", 0.75);
