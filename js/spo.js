@@ -11,6 +11,7 @@ $(function() {
 
     //Parsing
     $("#prse").on("click", function() {
+        //Si aucun input n'est renseigné
         if ($("input[type='text']").is(function() { return $(this).val() == ""; })) {
             return false;
         }
@@ -20,8 +21,9 @@ $(function() {
         var links = []; //Les arcs
         var dataobj = {}; //Objet des tableaux noeuds/liens
 
+        //Si chargement échantillon
         if (!$("#Suj0").length) {
-            var ble = $.get("exemple.json", function(data) {
+            $.get("exemple.json", function(data) {
                 iSPO = 0;
                 $.each(data.links, function(i, e) {
                     $("#nouvTriple").before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
@@ -83,7 +85,8 @@ $(function() {
             width = $("#lesvg").width(), //+svg.attr("width"),
             height = $("#lesvg").height(); //+svg.attr("height");
 
-        var color = d3.scaleOrdinal(d3.schemeCategory10);
+        var tabcouleurs = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
+        var color = d3.scaleOrdinal(tabcouleurs); //d3.schemeCategory10
 
         var g = svg.append("g");
 
