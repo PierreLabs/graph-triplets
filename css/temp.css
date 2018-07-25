@@ -3,6 +3,14 @@ html {
     min-height: 100%;
 }
 
+.page-header {
+    min-height: 9rem;
+}
+
+.page-header h1 {
+    font-size: 5.5vw;
+}
+
 .links line {
     stroke: #999;
     stroke-opacity: 0.6;

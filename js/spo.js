@@ -62,8 +62,8 @@ $(function() {
         d3.selectAll("svg > *").remove();
 
         var svg = d3.select("svg"),
-            width = +svg.attr("width"),
-            height = +svg.attr("height");
+            width = $("#lesvg").width(), //+svg.attr("width"),
+            height = $("#lesvg").height(); //+svg.attr("height");
 
         var color = d3.scaleOrdinal(d3.schemeCategory10);
 
@@ -84,7 +84,10 @@ $(function() {
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
-            }).distance(function(d) { return d.value.length + 2 > 5 ? d.value.length * 10 : 50; }))
+            }).distance(function(d) {
+                //évalue la longueur du lien en fonction de la longueur de chaine
+                return d.value.length + 2 > 5 ? d.value.length * 10 : 50;
+            }))
             .force("charge", d3.forceManyBody())
             .force("center", d3.forceCenter(width / 2, height / 2));
 
@@ -112,8 +115,8 @@ $(function() {
             .data(dataobj.links)
             .enter().append("text");
 
-        label.attr("font-family", "Arial, Helvetica, sans-serif")
-            .style("font", "normal 9px Arial")
+        label
+            .style("font", "normal 11px Arial")
             .style("fill", function(d) {
                 d3.selectAll("input").select(function() {
                     if (this.value == d.value) {
