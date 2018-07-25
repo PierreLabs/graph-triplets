@@ -17,7 +17,7 @@
     <div class="container-fluid">
         <header class="page-header d-flex p-4 mb-4 text-white rounded bg-dark">
             <div class="col-sm-10">
-                <h1>Visualiser RDF</h1>
+                <h1>Visualiser des triplets RDF</h1>
             </div>
             <div class="col-sm-2">
                 <img src="images/logo.png" height="108" width="100" alt="logo">
@@ -38,37 +38,39 @@
                 </div>
             </div>
         </div>
-        <footer class="footer bg-dark text-left py-3 px-3">
-            <div class="container">
+        <footer class="footer bg-dark text-left p-3">
+            <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
-                        &copy; 2018 Pierre Bournerie
-                        <a target="_blank" href="https://github.com/PierreLabs/graph-triplets">La page du projet sur GitHub</a>
+                    <div class="col">
+                        <div class="pull-left">&copy; 2018 Pierre Bournerie</div>
+                    </div>
+                    <div class="col">
+                        <div class="pull-right"><a target="_blank" href="https://github.com/PierreLabs/graph-triplets ">La page du projet sur GitHub</a></div>
                     </div>
                 </div>
             </div>
         </footer>
     </div>
     <!-- Modale Json résultant -->
-    <div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="jsonModalTitle" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="jsonModalTitle">JSON</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <div class="modal fade " id="jsonModal " tabindex="-1 " role="dialog " aria-labelledby="jsonModalTitle " aria-hidden="true ">
+        <div class="modal-dialog " role="document ">
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <h5 class="modal-title " id="jsonModalTitle ">JSON</h5>
+                    <button type="button " class="close " data-dismiss="modal " aria-label="Close ">
+                        <span aria-hidden="true ">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" id="jsonModalBody">
+                <div class="modal-body " id="jsonModalBody ">
                     ...
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                <div class="modal-footer ">
+                    <button type="button " class="btn btn-secondary " data-dismiss="modal ">Fermer</button>
                 </div>
             </div>
         </div>
     </div>
-    <script src="js/spo.js"></script>
+    <script src="js/spo.js "></script>
 </body>
 
 </html>

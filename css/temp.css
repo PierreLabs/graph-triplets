@@ -8,7 +8,7 @@ html {
 }
 
 .page-header h1 {
-    font-size: 5.5vw;
+    font-size: 5.4vw;
 }
 
 .links line {
@@ -36,7 +36,7 @@ html {
 }
 
 #prse {
-    margin-bottom: 80px;
+    margin-bottom: 110px;
 }
 
 #btJson {
@@ -44,15 +44,11 @@ html {
     margin-bottom: 80px;
 }
 
-footer a {
-    float: right;
-}
-
 .footer {
     position: absolute;
     bottom: 0;
     width: 98%;
-    height: 60px;
+    min-height: 60px;
     color: #FFFFFF;
 }
 
