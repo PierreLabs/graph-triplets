@@ -181,7 +181,7 @@ $(function() {
                         if (this.value == d.id) {
                             //couleurs inputs (border pour les noeuds)
                             this.style.border = "5px solid" + color(d.id);
-                            this.classList.add("input-rond");
+                            this.classList.add("rounded-circle");
                         }
                     });
                 return color(d.id);
