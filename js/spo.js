@@ -101,14 +101,17 @@ $(function() {
         }
 
         //Mise en place des forces
+        var attractForce = d3.forceManyBody().strength(-500).distanceMin(25).distanceMax(200);
+        var collisionForce = d3.forceCollide(20).strength(1).iterations(64);
         var simulation = d3.forceSimulation()
             .force("link", d3.forceLink().id(function(d) {
                 return d.id;
             }).distance(function(d) {
                 //évalue la longueur du lien en fonction de la longueur de chaine
-                return d.value.length + 2 > 5 ? d.value.length * 10 : 50;
+                return d.value.length * 12;
             }))
-            .force("charge", d3.forceManyBody())
+            .force("attractForce", attractForce)
+            .force("collisionForce", collisionForce)
             .force("center", d3.forceCenter(width / 2, height / 2));
 
         //liens
@@ -147,7 +150,7 @@ $(function() {
                 return color(d.value);
             })
             .attr("dy", "-5")
-            .attr("dx", "13")
+            .attr("dx", "26")
             .style('text-anchor', 'start')
             .attr("fill-opacity", 0.75);
 
@@ -174,7 +177,7 @@ $(function() {
             .selectAll("circle")
             .data(dataObj.nodes)
             .enter().append("circle")
-            .attr("r", 10)
+            .attr("r", 15)
             .attr("fill", function(d) {
                 d3.selectAll("input")
                     .select(function() {
@@ -191,7 +194,38 @@ $(function() {
                 .on("drag", dragged)
                 .on("end", dragended));
 
-        //survol des noeuds => mise en évidence des inputs correspondants
+        //Title pour avoir l'id du noeud au survol
+        node.append("title")
+            .text(function(d) {
+                return d.id;
+            });
+
+        simulation
+            .nodes(dataObj.nodes)
+            .on("tick", ticked);
+
+        simulation.force("link")
+            .links(dataObj.links);
+
+        //Survol d'un input => changement du rayon du noeud
+        $("input[type='text']").hover(function() { //mouseEnter
+            var laVal = this.value;
+            //le noeud possédant la valeur de l'input
+            g.selectAll("circle")
+                .filter(function(d) {
+                    return d.id === laVal;
+                }).transition().attr("r", 20);
+
+        }, function() { //mouseOut
+            var laVal = this.value;
+            //le noeud possédant la valeur de l'input
+            g.selectAll("circle")
+                .filter(function(d) {
+                    return d.id === laVal;
+                }).transition().attr("r", 15);
+        });
+
+        //Survol d'un noeud => mise en évidence des inputs correspondants
         node.on("mouseover", function(d) {
             d3.selectAll("input")
                 .select(function() {
@@ -212,37 +246,6 @@ $(function() {
                         this.style.transition = null;
                     }
                 });
-        });
-
-        //Title pour avoir l'id du noeud au survol
-        node.append("title")
-            .text(function(d) {
-                return d.id;
-            });
-
-        simulation
-            .nodes(dataObj.nodes)
-            .on("tick", ticked);
-
-        simulation.force("link")
-            .links(dataObj.links);
-
-        //Changement du rayon du noeud au survol
-        $("input[type='text']").hover(function() { //mouseEnter
-            var laVal = this.value;
-            //le noeud possédant la valeur de l'input
-            g.selectAll("circle")
-                .filter(function(d) {
-                    return d.id === laVal;
-                }).transition().attr("r", 20);
-
-        }, function() { //mouseOut
-            var laVal = this.value;
-            //le noeud possédant la valeur de l'input
-            g.selectAll("circle")
-                .filter(function(d) {
-                    return d.id === laVal;
-                }).transition().attr("r", 10);
         });
 
         //Fonction itération d3
