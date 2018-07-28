@@ -199,6 +199,7 @@ $(function() {
                         this.style.backgroundColor = color(d.id);
                         this.style.fontWeight = "bold";
                         this.style.color = "white";
+                        this.style.transition = "all 0.1s";
                     }
                 });
         }).on("mouseout", function(d) {
@@ -208,6 +209,7 @@ $(function() {
                         this.style.backgroundColor = null;
                         this.style.fontWeight = null;
                         this.style.color = null;
+                        this.style.transition = null;
                     }
                 });
         });
