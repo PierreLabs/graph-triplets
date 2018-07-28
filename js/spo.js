@@ -19,7 +19,7 @@ $(function() {
 
         var nodes = []; //Les noeuds
         var links = []; //Les arcs
-        var dataobj = {}; //Objet des tableaux noeuds/liens
+        var dataObj = {}; //Objet des tableaux noeuds/liens
 
         //Si chargement échantillon
         if (!$("#Suj0").length) {
@@ -32,7 +32,7 @@ $(function() {
                     $("#Obj" + iSPO).val(e.source);
                     iSPO++;
                 });
-                dataobj = data;
+                dataObj = data;
             });
         } else {
             //Sujets = noeuds
@@ -65,16 +65,16 @@ $(function() {
             });
 
             var newnodes = supprDoublons(nodes, "id"); //Tableau des noeuds uniques
-            dataobj = {
+            dataObj = {
                 nodes: newnodes,
                 links: links
             };
         }
 
         //Json résultant et affichage sur la page (popup)
-        var jsonTemp = JSON.stringify(dataobj, undefined, 1);
+        var jsonTemp = JSON.stringify(dataObj, undefined, 1);
         $("#jsonModalBody").html("<pre>" + jsonTemp + "</pre>");
-        $("#jsonModalTitle").html(dataobj.nodes.length + " noeuds et " + dataobj.links.length + " relations");
+        $("#jsonModalTitle").html(dataObj.nodes.length + " noeuds et " + dataObj.links.length + " relations");
         $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
 
         //Init D3
@@ -115,14 +115,14 @@ $(function() {
         var link = g
             .attr("class", "links")
             .selectAll("line")
-            .data(dataobj.links)
+            .data(dataObj.links)
             .enter().append("line")
             .attr("stroke-width", 1)
             .attr("stroke", function(d) { return color(d.value); });
 
         //Chemins labels
         var pathT = g.selectAll(".links")
-            .data(dataobj.links)
+            .data(dataObj.links)
             .enter().append("path")
             .attr("class", "pathT")
             .attr("id",
@@ -132,7 +132,7 @@ $(function() {
 
         //Labels
         var label = g.selectAll("text")
-            .data(dataobj.links)
+            .data(dataObj.links)
             .enter().append("text");
 
         label
@@ -172,7 +172,7 @@ $(function() {
         var node = g
             .attr("class", "nodes")
             .selectAll("circle")
-            .data(dataobj.nodes)
+            .data(dataObj.nodes)
             .enter().append("circle")
             .attr("r", 10)
             .attr("fill", function(d) {
@@ -181,7 +181,7 @@ $(function() {
                         if (this.value == d.id) {
                             //couleurs inputs (border pour les noeuds)
                             this.style.border = "5px solid" + color(d.id);
-                            this.classList.add("rounded-circle");
+                            this.style.borderRadius = "50%";
                         }
                     });
                 return color(d.id);
@@ -191,6 +191,27 @@ $(function() {
                 .on("drag", dragged)
                 .on("end", dragended));
 
+        //survol des noeuds => mise en évidence des inputs correspondants
+        node.on("mouseover", function(d) {
+            d3.selectAll("input")
+                .select(function() {
+                    if (this.value == d.id) {
+                        this.style.backgroundColor = color(d.id);
+                        this.style.fontWeight = "bold";
+                        this.style.color = "white";
+                    }
+                });
+        }).on("mouseout", function(d) {
+            d3.selectAll("input")
+                .select(function() {
+                    if (this.value == d.id) {
+                        this.style.backgroundColor = null;
+                        this.style.fontWeight = null;
+                        this.style.color = null;
+                    }
+                });
+        });
+
         //Title pour avoir l'id du noeud au survol
         node.append("title")
             .text(function(d) {
@@ -198,27 +219,27 @@ $(function() {
             });
 
         simulation
-            .nodes(dataobj.nodes)
+            .nodes(dataObj.nodes)
             .on("tick", ticked);
 
         simulation.force("link")
-            .links(dataobj.links);
+            .links(dataObj.links);
 
         //Changement du rayon du noeud au survol
         $("input[type='text']").hover(function() { //mouseEnter
-            var laval = this.value;
+            var laVal = this.value;
             //le noeud possédant la valeur de l'input
             g.selectAll("circle")
                 .filter(function(d) {
-                    return d.id === laval;
+                    return d.id === laVal;
                 }).transition().attr("r", 20);
 
         }, function() { //mouseOut
-            var laval = this.value;
+            var laVal = this.value;
             //le noeud possédant la valeur de l'input
             g.selectAll("circle")
                 .filter(function(d) {
-                    return d.id === laval;
+                    return d.id === laVal;
                 }).transition().attr("r", 10);
         });
 
