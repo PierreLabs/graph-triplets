@@ -220,7 +220,7 @@ $(function() {
                     // input => Prédicat ?
                     var isPredicat = $(this).attr("id").indexOf("Pred") > -1;
                     return $(this).val() === laVal && !isPredicat;
-                }).transition().style("background-color", color(laVal));
+                }).transition().style("background-color", color(laVal)).style("color", "white").style("font-weight", "bold");
 
         }, function() { //mouseOut
             let laVal = this.value;
@@ -234,7 +234,7 @@ $(function() {
                     // input => Prédicat ?
                     var isPredicat = $(this).attr("id").indexOf("Pred") > -1;
                     return $(this).val() === laVal && !isPredicat;
-                }).transition().style("background-color", null);
+                }).transition().style("background-color", null).style("color", null).style("font-weight", null);
         });
 
         //Survol d'un noeud => mise en évidence des inputs correspondants
