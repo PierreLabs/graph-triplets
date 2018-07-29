@@ -207,22 +207,34 @@ $(function() {
         simulation.force("link")
             .links(dataObj.links);
 
-        //Survol d'un input => changement du rayon du noeud
+        //Survol d'un input => changement du rayon du noeud + couleur inputs similaires
         $("input[type='text']").hover(function() { //mouseEnter
-            var laVal = this.value;
+            let laVal = this.value;
             //le noeud possédant la valeur de l'input
             g.selectAll("circle")
                 .filter(function(d) {
                     return d.id === laVal;
-                }).transition().attr("r", 20);
+                }).transition().attr("r", 23);
+            d3.selectAll("input")
+                .filter(function() {
+                    // input => Prédicat ?
+                    var isPredicat = $(this).attr("id").indexOf("Pred") > -1;
+                    return $(this).val() === laVal && !isPredicat;
+                }).transition().style("background-color", color(laVal));
 
         }, function() { //mouseOut
-            var laVal = this.value;
+            let laVal = this.value;
             //le noeud possédant la valeur de l'input
             g.selectAll("circle")
                 .filter(function(d) {
                     return d.id === laVal;
                 }).transition().attr("r", 15);
+            d3.selectAll("input")
+                .filter(function() {
+                    // input => Prédicat ?
+                    var isPredicat = $(this).attr("id").indexOf("Pred") > -1;
+                    return $(this).val() === laVal && !isPredicat;
+                }).transition().style("background-color", null);
         });
 
         //Survol d'un noeud => mise en évidence des inputs correspondants
@@ -233,7 +245,7 @@ $(function() {
                         this.style.backgroundColor = color(d.id);
                         this.style.fontWeight = "bold";
                         this.style.color = "white";
-                        this.style.transition = "all 0.1s";
+                        this.style.transition = "background-color 0.2s";
                     }
                 });
         }).on("mouseout", function(d) {
