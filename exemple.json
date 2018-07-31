@@ -9,7 +9,7 @@
     "links": [{ "target": "auteur1", "source": "oeuvre1", "value": "créateur" },
         { "target": "auteur2", "source": "oeuvre2", "value": "créateur" },
         { "target": "expression1", "source": "oeuvre1", "value": "exprime" },
-        { "target": "expression1", "source": "auteur2", "value": "contributeur" },
+        { "target": "auteur2", "source": "expression1", "value": "contributeur" },
         { "target": "auteur1", "source": "1952", "value": "né en" },
         { "target": "auteur2", "source": "1952", "value": "né en" }
     ]
