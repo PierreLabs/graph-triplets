@@ -20,6 +20,7 @@ $(function() {
         var nodes = []; //Les noeuds
         var links = []; //Les arcs
         var dataObj = {}; //Objet des tableaux noeuds/liens
+        d3.selectAll("svg > *").remove();
 
         //Si chargement échantillon
         if (!$("#Suj0").length) {
@@ -78,8 +79,6 @@ $(function() {
         $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
 
         //Init D3
-        d3.selectAll("svg > *").remove();
-
         var svg = d3.select("svg"),
             width = $("#lesvg").width(), //+svg.attr("width"),
             height = $("#lesvg").height(); //+svg.attr("height");
@@ -136,9 +135,7 @@ $(function() {
         //Labels
         var label = g.selectAll("text")
             .data(dataObj.links)
-            .enter().append("text");
-
-        label
+            .enter().append("text")
             .style("font", "normal 11px Arial")
             .style("fill", function(d) {
                 d3.selectAll("input").select(function() {
@@ -206,6 +203,11 @@ $(function() {
 
         simulation.force("link")
             .links(dataObj.links);
+
+        link.exit().remove();
+        pathT.exit().remove();
+        label.exit().remove();
+        node.exit().remove();
 
         //Survol d'un input => changement du rayon du noeud + couleur inputs similaires
         $("input[type='text']").hover(function() { //mouseEnter
