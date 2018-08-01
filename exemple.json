@@ -1,16 +1,58 @@
 {
-    "nodes": [{ "id": "auteur1", "group": "sujets" },
-        { "id": "auteur2", "group": "sujets" },
-        { "id": "expression1", "group": "sujets" },
-        { "id": "oeuvre1", "group": "objets" },
-        { "id": "oeuvre2", "group": "objets" },
-        { "id": "1952", "group": "objets" }
+    "nodes": [{
+            "id": "auteur1",
+            "group": "sujets"
+        },
+        {
+            "id": "auteur2",
+            "group": "sujets"
+        },
+        {
+            "id": "expression1",
+            "group": "sujets"
+        },
+        {
+            "id": "oeuvre1",
+            "group": "objets"
+        },
+        {
+            "id": "oeuvre2",
+            "group": "objets"
+        },
+        {
+            "id": "1952",
+            "group": "objets"
+        }
     ],
-    "links": [{ "target": "auteur1", "source": "oeuvre1", "value": "créateur" },
-        { "target": "auteur2", "source": "oeuvre2", "value": "créateur" },
-        { "target": "expression1", "source": "oeuvre1", "value": "exprime" },
-        { "target": "auteur2", "source": "expression1", "value": "contributeur" },
-        { "target": "auteur1", "source": "1952", "value": "né en" },
-        { "target": "auteur2", "source": "1952", "value": "né en" }
+    "links": [{
+            "target": "auteur1",
+            "source": "oeuvre1",
+            "value": "créateur"
+        },
+        {
+            "target": "auteur2",
+            "source": "oeuvre2",
+            "value": "créateur"
+        },
+        {
+            "target": "expression1",
+            "source": "oeuvre1",
+            "value": "exprime"
+        },
+        {
+            "target": "auteur2",
+            "source": "expression1",
+            "value": "contributeur"
+        },
+        {
+            "target": "auteur1",
+            "source": "1952",
+            "value": "né en"
+        },
+        {
+            "target": "auteur2",
+            "source": "1952",
+            "value": "né en"
+        }
     ]
 }
