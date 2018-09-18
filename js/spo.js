@@ -107,7 +107,7 @@ $(function() {
                 return d.id;
             }).distance(function(d) {
                 //évalue la longueur du lien en fonction de la longueur de chaine
-                return d.value.length * 12;
+                return d.value.length + 40;
             }))
             .force("attractForce", attractForce)
             .force("collisionForce", collisionForce)
