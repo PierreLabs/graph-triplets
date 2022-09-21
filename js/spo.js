@@ -28,9 +28,15 @@ $(function() {
                 iSPO = 0;
                 $.each(data.links, function(i, e) {
                     $("#nouvTriple").before("<input placeholder='Sujet' type='text' id='Suj" + iSPO + "'><input placeholder='Prédicat' type='text' id='Pred" + iSPO + "'><input placeholder='Objet' type='text' id='Obj" + iSPO + "'><br><br>");
-                    $("#Suj" + iSPO).val(e.target);
+                    $("#Suj" + iSPO).val(e.target).attr("data-type", function() {
+                        var type = data.nodes.find(a => a.id == e.target).type;
+                        return type ? type : null;
+                    });
                     $("#Pred" + iSPO).val(e.value);
-                    $("#Obj" + iSPO).val(e.source);
+                    $("#Obj" + iSPO).val(e.source).attr("data-type", function() {
+                        var type = data.nodes.find(a => a.id == e.source).type;
+                        return type ? type : null;
+                    });
                     iSPO++;
                 });
                 dataObj = data;
@@ -41,7 +47,8 @@ $(function() {
             $.each($sujs, function(i, e) {
                 nodes.push({
                     id: e.value, //Sujet
-                    group: "sujets"
+                    group: "sujets",
+                    type: e.dataset.type
                 });
             });
 
@@ -50,7 +57,8 @@ $(function() {
             $.each($objs, function(i, e) {
                 nodes.push({
                     id: e.value, //objet
-                    group: "objets"
+                    group: "objets",
+                    type: e.dataset.type
                 });
             });
 
@@ -83,6 +91,8 @@ $(function() {
             width = $("#lesvg").width(), //+svg.attr("width"),
             height = $("#lesvg").height(); //+svg.attr("height");
 
+        var dictColorTB = { "oeuvre": "#c00000", "expression": "#ff9900", "manifestation": "#92d050", "item": "#803b13", "agent": "#315fba", "concept": "#f580f4", "lapstemps": "#ffcc66" };
+
         var tabcouleurs = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
         var color = d3.scaleOrdinal(tabcouleurs); //d3.schemeCategory10
 
@@ -107,7 +117,7 @@ $(function() {
                 return d.id;
             }).distance(function(d) {
                 //évalue la longueur du lien en fonction de la longueur de chaine
-                return d.value.length + 40;
+                return d.value.length + 70;
             }))
             .force("attractForce", attractForce)
             .force("collisionForce", collisionForce)
@@ -176,15 +186,16 @@ $(function() {
             .enter().append("circle")
             .attr("r", 15)
             .attr("fill", function(d) {
+                var coul = d.type ? dictColorTB[d.type] : color(d.id)
                 d3.selectAll("input")
                     .select(function() {
                         if (this.value == d.id) {
                             //couleurs inputs (border pour les noeuds)
-                            this.style.border = "5px solid" + color(d.id);
+                            this.style.border = "5px solid" + coul;
                             this.style.borderRadius = "50%";
                         }
                     });
-                return color(d.id);
+                return coul;
             })
             .call(d3.drag()
                 .on("start", dragstarted)
@@ -212,6 +223,7 @@ $(function() {
         //Survol d'un input => changement du rayon du noeud + couleur inputs similaires
         $("input[type='text']").hover(function() { //mouseEnter
             let laVal = this.value;
+            let coul = this.dataset.type ? dictColorTB[this.dataset.type] : color(laVal);
             //le noeud possédant la valeur de l'input
             g.selectAll("circle")
                 .filter(function(d) {
@@ -222,7 +234,7 @@ $(function() {
                     // input => Prédicat ?
                     var isPredicat = $(this).attr("id").indexOf("Pred") > -1;
                     return $(this).val() === laVal && !isPredicat;
-                }).transition().style("background-color", color(laVal)).style("color", "white").style("font-weight", "bold");
+                }).transition().style("background-color", coul).style("color", "white").style("font-weight", "bold");
 
         }, function() { //mouseOut
             let laVal = this.value;
@@ -244,7 +256,7 @@ $(function() {
             d3.selectAll("input")
                 .select(function() {
                     if (this.value == d.id) {
-                        this.style.backgroundColor = color(d.id);
+                        this.style.backgroundColor = d.type ? dictColorTB[d.type] : color(d.id);
                         this.style.fontWeight = "bold";
                         this.style.color = "white";
                         this.style.transition = "background-color 0.2s";

@@ -1,27 +1,33 @@
 {
     "nodes": [{
             "id": "auteur1",
-            "group": "sujets"
+            "group": "sujets",
+            "type": "agent"
         },
         {
             "id": "auteur2",
-            "group": "sujets"
+            "group": "sujets",
+            "type": "agent"
         },
         {
             "id": "expression1",
-            "group": "sujets"
+            "group": "sujets",
+            "type": "expression"
         },
         {
             "id": "oeuvre1",
-            "group": "objets"
+            "group": "objets",
+            "type": "oeuvre"
         },
         {
             "id": "oeuvre2",
-            "group": "objets"
+            "group": "objets",
+            "type": "oeuvre"
         },
         {
             "id": "1952",
-            "group": "objets"
+            "group": "objets",
+            "type": "lapstemps"
         }
     ],
     "links": [{
