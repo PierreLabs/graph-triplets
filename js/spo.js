@@ -80,17 +80,14 @@ $(function() {
             };
         }
 
-        //Json résultant et affichage sur la page (popup)
         var jsonTemp = JSON.stringify(dataObj, undefined, 1);
-        $("#jsonModalBody").html("<pre>" + jsonTemp + "</pre>");
-        $("#jsonModalTitle").html(dataObj.nodes.length + " noeuds et " + dataObj.links.length + " relations");
-        $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
 
         //Init D3
         var svg = d3.select("svg"),
             width = $("#lesvg").width(), //+svg.attr("width"),
             height = $("#lesvg").height(); //+svg.attr("height");
 
+        //"Dictionnaire" clé/valeur. Dans le json, la valeur du "type" va permettre une correspondance dans le nuancier de la TB. Ces valeurs pour le "type" sont autorisées
         var dictColorTB = { "oeuvre": "#c00000", "expression": "#ff9900", "manifestation": "#92d050", "item": "#803b13", "agent": "#315fba", "concept": "#f580f4", "lapstemps": "#ffcc66" };
 
         var tabcouleurs = ["#3366cc", "#dc3912", "#ff9900", "#109618", "#990099", "#0099c6", "#dd4477", "#66aa00", "#b82e2e", "#316395", "#994499", "#22aa99", "#aaaa11", "#6633cc", "#e67300", "#8b0707", "#651067", "#329262", "#5574a6", "#3b3eac"];
@@ -133,7 +130,8 @@ $(function() {
             .attr("stroke", function(d) { return color(d.value); });
 
         //Chemins labels
-        var pathT = g.selectAll(".links")
+        var pathT = g
+            .selectAll(".links")
             .data(dataObj.links)
             .enter().append("path")
             .attr("class", "pathT")
@@ -143,7 +141,8 @@ $(function() {
                 });
 
         //Labels
-        var label = g.selectAll("text")
+        var label = g
+            .selectAll("text")
             .data(dataObj.links)
             .enter().append("text")
             .style("font", "normal 11px Arial")
@@ -219,6 +218,12 @@ $(function() {
         pathT.exit().remove();
         label.exit().remove();
         node.exit().remove();
+
+        //Json résultant et affichage sur la page (popup)
+        $("#jsonModalBody").html("<pre>" + jsonTemp + "</pre>");
+        $("#jsonModalTitle").html(dataObj.nodes.length + " noeuds et " + dataObj.links.length + " relations");
+        $("#btJson").prop("disabled", false); //Activation du bouton désactivé par défaut
+        $("#svgpng").css("visibility", "visible"); //Visibilité du bouton d'exportation d'image
 
         //Survol d'un input => changement du rayon du noeud + couleur inputs similaires
         $("input[type='text']").hover(function() { //mouseEnter
@@ -329,4 +334,9 @@ $(function() {
             return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos;
         });
     }
+
+    $("#svgpng").click(function() {
+        //https://github.com/exupero/saveSvgAsPng
+        saveSvgAsPng(document.getElementById("lesvg"), "graph.png", { scale: 1.5 });
+    })
 });
